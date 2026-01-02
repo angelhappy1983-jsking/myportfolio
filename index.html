@@ -3,153 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Architecture Portfolio | angelhappy1983-jsking</title>
+    <title>Architect Portfolio | angelhappy1983-jsking</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
     
     <style>
-        /* 기본 스타일 초기화 */
+        /* CSS를 여기에 직접 포함하여 경로 문제를 원천 차단합니다 */
         :root {
             --bg-color: #ffffff;
             --text-color: #111111;
             --accent-color: #777777;
-            --transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
-        body { 
-            font-family: 'Noto Sans KR', sans-serif; 
-            background: var(--bg-color); 
-            color: var(--text-color); 
-            line-height: 1.6;
-            word-break: keep-all;
-        }
+        body { font-family: 'Noto Sans KR', sans-serif; background: var(--bg-color); color: var(--text-color); line-height: 1.6; }
 
         /* 네비게이션 */
         nav { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center;
-            padding: 1.5rem 5%; 
-            position: fixed; 
-            width: 100%; 
-            top: 0; 
-            z-index: 1000; 
-            background: rgba(255,255,255,0.95);
-            backdrop-filter: blur(5px);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 1.5rem 5%; position: fixed; width: 100%; top: 0; z-index: 1000; 
+            background: rgba(255,255,255,0.95); backdrop-filter: blur(5px); border-bottom: 1px solid #eee;
         }
-        .logo { font-weight: 700; font-size: 1.1rem; letter-spacing: 3px; color: #000; text-decoration: none; }
+        .logo { font-weight: 700; font-size: 1.1rem; letter-spacing: 2px; }
         .nav-links { display: flex; list-style: none; }
-        .nav-links li { margin-left: 2.5rem; }
-        .nav-links a { 
-            text-decoration: none; 
-            color: var(--text-color); 
-            font-size: 0.85rem; 
-            font-weight: 400;
-            letter-spacing: 1px;
-            transition: 0.3s;
-        }
-        .nav-links a:hover { color: var(--accent-color); }
+        .nav-links li { margin-left: 2rem; }
+        .nav-links a { text-decoration: none; color: #333; font-size: 0.9rem; }
 
         /* 히어로 섹션 */
-        .hero { 
-            height: 100vh; 
-            display: flex; 
-            align-items: center; 
-            padding: 0 10%; 
-            background: #fdfdfd; 
-        }
-        .hero-content h1 { 
-            font-family: 'Playfair Display', serif; 
-            font-size: clamp(2.5rem, 8vw, 5rem); 
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-        }
-        .hero-content h1 span.highlight { color: var(--accent-color); font-style: italic; font-weight: 400; }
-        .hero-content p { font-size: 1.1rem; font-weight: 300; letter-spacing: 1px; color: #555; }
+        .hero { height: 100vh; display: flex; align-items: center; padding: 0 10%; background: #fdfdfd; }
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 8vw, 4.5rem); line-height: 1.2; }
+        .highlight { color: var(--accent-color); font-style: italic; }
 
-        /* 프로젝트 섹션 */
-        .projects { padding: 120px 5%; }
-        .projects-header { margin-bottom: 60px; border-bottom: 1px solid #eee; padding-bottom: 20px; }
-        .projects-header h2 { font-size: 1.8rem; font-weight: 700; letter-spacing: 2px; }
-
+        /* 프로젝트 그리드 */
+        .projects { padding: 100px 5%; }
         .project-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); 
-            gap: 40px; 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; 
         }
-
-        .project-card { 
-            position: relative; 
-            overflow: hidden; 
-            background: #f0f0f0; 
-            aspect-ratio: 4 / 3;
-            cursor: pointer;
-        }
-        .img-container { width: 100%; height: 100%; }
-        .img-container img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-            transition: var(--transition); 
-        }
-
-        /* 인터랙티브 호버 효과 */
+        .project-card { position: relative; overflow: hidden; background: #f0f0f0; aspect-ratio: 16 / 10; cursor: pointer; }
+        .project-card img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        
         .overlay { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0, 0, 0, 0.8); 
-            color: white; 
+            background: rgba(0,0,0,0.7); color: white; opacity: 0;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            opacity: 0; 
-            transition: var(--transition);
-            padding: 20px;
-            text-align: center;
+            transition: 0.4s;
         }
         .project-card:hover .overlay { opacity: 1; }
-        .project-card:hover img { transform: scale(1.08); }
-
-        .overlay h3 { font-size: 1.5rem; margin-bottom: 10px; font-weight: 400; transform: translateY(20px); transition: var(--transition); }
-        .overlay p { font-size: 0.9rem; font-weight: 300; opacity: 0.8; transform: translateY(20px); transition: var(--transition); transition-delay: 0.1s; }
-        .project-card:hover h3, .project-card:hover p { transform: translateY(0); }
+        .project-card:hover img { transform: scale(1.1); }
 
         /* 하단 연락처 */
-        footer { 
-            padding: 150px 5%; 
-            text-align: center; 
-            background: #111; 
-            color: #fff; 
-        }
-        footer h2 { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 20px; }
-        footer p { margin-bottom: 40px; font-weight: 300; color: #999; }
+        footer { padding: 80px 5%; text-align: center; background: #111; color: white; }
         .contact-btn { 
-            display: inline-block; 
-            padding: 18px 50px; 
-            border: 1px solid #fff; 
-            color: #fff; 
-            text-decoration: none; 
-            font-size: 0.9rem;
-            letter-spacing: 2px;
-            transition: 0.3s; 
+            display: inline-block; margin-top: 20px; padding: 15px 40px; 
+            border: 1px solid white; color: white; text-decoration: none; 
         }
-        .contact-btn:hover { background: #fff; color: #000; }
+        .contact-btn:hover { background: white; color: black; }
 
-        /* 반응형 모바일 */
         @media (max-width: 768px) {
-            .nav-links { display: none; } /* 모바일에서는 메뉴 숨김 (필요시 햄버거 메뉴 구현) */
             .project-grid { grid-template-columns: 1fr; }
-            .hero { padding: 0 5%; }
-            .hero-content h1 { font-size: 3rem; }
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <a href="#" class="logo">ANGEL HAPPY ARCHITECTS</a>
+        <div class="logo">ANGEL HAPPY</div>
         <ul class="nav-links">
             <li><a href="#projects">PROJECTS</a></li>
-            <li><a href="#about">ABOUT</a></li>
             <li><a href="#contact">CONTACT</a></li>
         </ul>
     </nav>
@@ -157,69 +78,33 @@
     <section class="hero">
         <div class="hero-content">
             <h1>Designing <span class="highlight">Space</span><br>& Experience</h1>
-            <p>형태는 기능을 따르되, 사용자의 삶을 담아내야 합니다.</p>
+            <p>형태는 기능을 따르되, 감동을 남겨야 합니다.</p>
         </div>
     </section>
 
     <section id="projects" class="projects">
-        <div class="projects-header">
-            <h2>SELECTED WORKS</h2>
-        </div>
         <div class="project-grid">
             <div class="project-card">
-                <div class="img-container">
-                    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1000" alt="Building 1">
-                    <div class="overlay">
-                        <h3>Urban Glass Tower</h3>
-                        <p>2026 | SEOUL, KOREA</p>
-                    </div>
+                <img src="https://images.unsplash.com/photo-1487958449943-2429e8be8625?q=80&w=1000" alt="Project 1">
+                <div class="overlay">
+                    <h3>Urban Pavillion</h3>
+                    <p>2026 | Seoul</p>
                 </div>
             </div>
             <div class="project-card">
-                <div class="img-container">
-                    <img src="https://images.unsplash.com/photo-1518005020251-58296b8f7b39?q=80&w=1000" alt="Building 2">
-                    <div class="overlay">
-                        <h3>Minimalist Residence</h3>
-                        <p>2025 | GYEONGGI, KOREA</p>
-                    </div>
-                </div>
-            </div>
-            <div class="project-card">
-                <div class="img-container">
-                    <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1000" alt="Building 3">
-                    <div class="overlay">
-                        <h3>Cultural Art Center</h3>
-                        <p>2025 | BUSAN, KOREA</p>
-                    </div>
+                <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1000" alt="Project 2">
+                <div class="overlay">
+                    <h3>Minimal Library</h3>
+                    <p>2026 | Gyeonggi</p>
                 </div>
             </div>
         </div>
     </section>
 
     <footer id="contact">
-        <h2>Let's Build Something Together</h2>
-        <p>프로젝트 의뢰 및 협업 문의는 언제나 환영합니다.</p>
-        <a href="mailto:angelhappy1983@example.com" class="contact-btn">SEND MESSAGE</a>
+        <h2>Contact Me</h2>
+        <a href="mailto:email@address.com" class="contact-btn">GET IN TOUCH</a>
     </footer>
 
-    <script>
-        // 스크롤 감지 인터랙션: 요소가 화면에 보일 때 나타나기
-        const observerOptions = { threshold: 0.2 };
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = "1";
-                    entry.target.style.transform = "translateY(0)";
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.project-card').forEach(card => {
-            card.style.opacity = "0";
-            card.style.transform = "translateY(40px)";
-            card.style.transition = "all 0.8s ease-out";
-            observer.observe(card);
-        });
-    </script>
 </body>
 </html>
